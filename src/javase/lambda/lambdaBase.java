@@ -1,4 +1,4 @@
-package test.lambda;/*
+package javase.lambda;/*
  * @Author 高凌峰
  * @Date 2020-11-01 18:03
  */
@@ -6,7 +6,6 @@ package test.lambda;/*
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**

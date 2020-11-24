@@ -1,4 +1,4 @@
-package test.exception.customException;
+package javase.exception.customException;
 
 /**
  * @author gaolingfeng

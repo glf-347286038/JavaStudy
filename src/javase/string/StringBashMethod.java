@@ -1,4 +1,4 @@
-package test.string;
+package javase.string;
 
 /**
  * @author gaolingfeng

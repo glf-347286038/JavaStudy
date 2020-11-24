@@ -1,9 +1,7 @@
-package test.objectClass;/*
+package javase.objectClass;/*
  * @Author 高凌峰
  * @Date 2020-11-01 20:21
  */
-
-import java.util.Objects;
 
 /**
  * 对于 == 如果作用于基本数据类型的变量，则直接比较其存储的“值”是否相等

@@ -1,4 +1,4 @@
-package test.exception.customException;
+package javase.exception.customException;
 
 /**
  * 自定义“无效名字异常”
