@@ -14,6 +14,8 @@ public class SleepAndWaite {
         Thread thread = new Thread(new Thread1());
         thread.setName("thread1");
         thread.start();
+        //打断thread的休眠
+        thread.interrupt();
 
         //thread.sleep()阻塞的是当前线程，因为sleep是静态方法等同于Thread.sleep()
         //thread.sleep(5000);
