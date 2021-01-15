@@ -23,8 +23,9 @@ import java.util.stream.Collectors;
  * 可选的大括号：如果主体包含了一个语句，就不需要使用大括号
  * 可选的返回关键字：如果主体只有一个表达式返回值则编译器会自动返回值，大括号需要指定明表达式返回了一个数值
  *
+ * @author gaolingfeng
  */
-public class lambdaBase {
+public class LambdaBase {
     public static void main(String[] args){
         //1.使用lambda表达式创建一个线程
         Thread thread = new Thread(() -> {

@@ -17,6 +17,7 @@ import java.util.Map;
  * 放到链表的最后一个节点（链表超过8之后要将链表转换为红黑树进行存储）
  * 否则新增；对于查找操作来讲，仍需遍历链表，然后通过key对象的equals方法逐一比对查找。所以，性能考虑，HashMap中的链表出现越少，性能越好。
  *
+ * @author gaolingfeng
  */
 public class HashMapBase {
     public static void main(String[] args){
