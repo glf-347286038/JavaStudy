@@ -17,6 +17,10 @@ public class TestBigDecimalMain {
         //multiply  乘法
         //divide    除法
 
+        System.out.println("-----------------");
+
+        System.out.println((BigDecimal.valueOf(3).divide(BigDecimal.valueOf(8),9,BigDecimal.ROUND_DOWN)).stripTrailingZeros());
+
     }
 
     /**
