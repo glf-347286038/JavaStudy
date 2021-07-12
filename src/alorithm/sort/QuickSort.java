@@ -1,4 +1,4 @@
-package javase.alorithm.sort;
+package alorithm.sort;
 
 /**
  * 快速排序

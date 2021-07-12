@@ -1,4 +1,4 @@
-package designpatterns.observermode.strategymode.demo01;
+package designpatterns.strategymode.demo01;
 
 /**
  * @Author: gaolingfeng 加减乘

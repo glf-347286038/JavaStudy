@@ -65,8 +65,6 @@ public class RemoveDemo {
                 list06.remove(item);
             }
         }
-
-
     }
 
     private static List<Integer> listNums() {
