@@ -1,8 +1,10 @@
 package javase.lambda;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+import java.math.BigDecimal;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -11,129 +13,161 @@ import java.util.stream.Collectors;
  * @description:
  */
 public class LambdaBase2 {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         group();
 
         filter();
+
+        sum();
+
+        sort();
+
+        distinct();
+
+        bestValue();
+
+        listToMap();
     }
 
     /**
      * 分组 groupingBy
      */
-    public static void group(){
+    public static void group() {
         List<Person> personList = queryPerson();
+        Map<String, List<Person>> map;
         // 组合分组，以sex+address分组
-        Map<String,List<Person>> map = personList.stream().collect(Collectors.groupingBy(ele->ele.groupKey()));
-        for(Map.Entry entry:map.entrySet()){
-            System.out.println(entry.getKey()+":"+entry.getValue());
+        map = personList.stream().collect(Collectors.groupingBy(Person::groupKey));
+        for (Map.Entry<String, List<Person>> entry : map.entrySet()) {
+            System.out.println("groupBy" + entry.getKey() + ":" + entry.getValue());
         }
 
         System.out.println("====================");
 
         // 单一分组
-        Map<String,List<Person>> map1 = personList.stream().collect(Collectors.groupingBy(ele->ele.groupKey()));
-        for(Map.Entry entry:map1.entrySet()){
-            System.out.println(entry.getKey()+":"+entry.getValue());
+        map = personList.stream().collect(Collectors.groupingBy(Person::getAddress));
+        for (Map.Entry<String, List<Person>> entry : map.entrySet()) {
+            System.out.println("groupBy" + entry.getKey() + ":" + entry.getValue());
         }
     }
 
     /**
      * 过滤 filter
      */
-    public static void filter(){
-        Person person = new Person("周","11","女","美国");
-        Person finalPerson = person;
+    public static void filter() {
+        System.out.println("====================");
+        System.out.println("====================");
+        Person person = new Person("高", 29, "女", "美国", BigDecimal.valueOf(1800.00));
         List<Person> personList = queryPerson();
-        if(personList.stream().filter(ele -> finalPerson.getName().equals(ele.getName()) && finalPerson.getAge().equals(ele.getAge())).collect(Collectors.toList()).size() > 0){
-            System.out.println(person.toString());;
-        }else {
-            System.out.println("不存在");;
-        }
+        List<Person> personList1 = personList.stream().filter(obj -> person.getName().equals(obj.getName()) && person.getAge().equals(obj.getAge())).collect(Collectors.toList());
+        System.out.println("filter" + personList1);
     }
 
+    /**
+     * 求和
+     */
+    public static void sum() {
+        List<Person> personList = queryPerson();
+        // 基本类型用map和sum
+        int totalAge = personList.stream().mapToInt(Person::getAge).sum();
+        System.out.println("年龄总和为" + totalAge);
+        BigDecimal totalPrice = personList.stream().map(Person::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+        System.out.println("金钱总额为:" + totalPrice);
+    }
 
-    public static List<Person> queryPerson(){
+    /**
+     * 排序
+     */
+    public static void sort() {
+        List<Person> personList = queryPerson();
+        // 正序排序
+        personList.sort(Comparator.comparing(Person::getAge));
+        personList.sort(Comparator.comparing(Person::getAge).thenComparing(Person::getPrice));
+        // 根据年龄倒序
+        personList.sort(Comparator.comparing(Person::getAge).reversed());
+    }
+
+    /**
+     * 去重
+     */
+    public static void distinct() {
+        List<Person> personList = queryPerson();
+        List<String> nameList = personList.stream().map(Person::getName).distinct().collect(Collectors.toList());
+        System.out.println("distinct" + nameList);
+    }
+
+    /**
+     * 最值
+     */
+    public static void bestValue() {
+        List<Person> personList = queryPerson();
+        Integer minAge = personList.stream().map(Person::getAge).min(Integer::compareTo).orElse(0);
+        Integer maxAge = personList.stream().map(Person::getAge).max(Integer::compareTo).orElse(0);
+        OptionalDouble optionalDouble = personList.stream().mapToDouble(Person::getAge).average();
+        System.out.println("最小年龄:" + minAge + " 最大年龄:" + maxAge + "平均值:" + optionalDouble);
+        BigDecimal minPrice = personList.stream().map(Person::getPrice).min(BigDecimal::compareTo).orElse(BigDecimal.valueOf(0));
+        BigDecimal maxPrice = personList.stream().map(Person::getPrice).max(BigDecimal::compareTo).orElse(BigDecimal.valueOf(0));
+        System.out.println("最低价格" + minPrice + " 最高价格" + maxPrice);
+    }
+
+    /**
+     * list转map
+     */
+    public static void listToMap() {
+        List<Person> personList = queryPerson();
+        // Map<String,Person> personMap = personList.stream().collect(Collectors.toMap(Person::getName, account -> account)); key重复时会报错
+        Map<String, Person> personMap = personList.stream().collect(Collectors.toMap(Person::getName, person -> person, (person1, person2) -> person1));
+        System.out.println("mapToList" + personMap);
+    }
+
+    public static List<Person> queryPerson() {
         List<Person> personList = new ArrayList<>();
-        personList.add(new Person("高","17","男","中国"));
-        personList.add(new Person("赵","18","男","中国"));
-        personList.add(new Person("钱","17","男","美国"));
-        personList.add(new Person("孙","19","男","美国"));
-        personList.add(new Person("李","15","男","英国"));
-        personList.add(new Person("周","11","女","美国"));
-        personList.add(new Person("吴","24","女","美国"));
-        personList.add(new Person("郑","25","男","香港"));
-        personList.add(new Person("王","26","男","香港"));
-        personList.add(new Person("应","27","男","法国"));
-        personList.add(new Person("董","28","男","法国"));
-        personList.add(new Person("高","29","男","德国"));
+        personList.add(new Person("高", 17, "男", "中国", BigDecimal.valueOf(2000.00)));
+        personList.add(new Person("赵", 18, "男", "中国", BigDecimal.valueOf(1000.05)));
+        personList.add(new Person("钱", 17, "男", "美国", BigDecimal.valueOf(1000.95)));
+        personList.add(new Person("孙", 19, "男", "美国", BigDecimal.valueOf(3000.00)));
+        personList.add(new Person("李", 15, "男", "英国", BigDecimal.valueOf(4000.00)));
+        personList.add(new Person("周", 11, "女", "美国", BigDecimal.valueOf(2000.00)));
+        personList.add(new Person("吴", 24, "女", "美国", BigDecimal.valueOf(3000.00)));
+        personList.add(new Person("郑", 25, "男", "香港", BigDecimal.valueOf(7000.00)));
+        personList.add(new Person("王", 26, "男", "香港", BigDecimal.valueOf(7000.00)));
+        personList.add(new Person("应", 27, "男", "法国", BigDecimal.valueOf(8000.00)));
+        personList.add(new Person("董", 28, "男", "法国", BigDecimal.valueOf(9000.00)));
+        personList.add(new Person("高", 29, "男", "德国", BigDecimal.valueOf(10000.00)));
         return personList;
     }
 
 }
 
+@Data
+@AllArgsConstructor
 class Person {
+    /**
+     * 姓名
+     */
     private String name;
-    private String age;
+    /**
+     * 年龄
+     */
+    private Integer age;
+    /**
+     * 性别
+     */
     private String sex;
+    /**
+     * 地址
+     */
     private String address;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Person(String name, String age, String sex, String address) {
-        this.name = name;
-        this.age = age;
-        this.sex = sex;
-        this.address = address;
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", age='" + age + '\'' +
-                ", sex='" + sex + '\'' +
-                ", address='" + address + '\'' +
-                '}';
-    }
+    /**
+     * 价格
+     */
+    private BigDecimal price;
 
     /**
      * 分组依据
-     * @return
+     *
+     * @return 分组依据
      */
     public String groupKey() {
-        return sex+","+address;
+        return sex + "," + address;
     }
 }
-
-
-
