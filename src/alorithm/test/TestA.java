@@ -1,6 +1,5 @@
 package alorithm.test;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,11 +23,12 @@ public class TestA {
         long endTime02 = System.currentTimeMillis();
         System.out.println("高" + (endTime02 - startTime2) + "ms");
 
-//        System.out.println(lengthOfLongestSubstring("ahabcah"));
         long startTime = System.currentTimeMillis();
         System.out.println(solution(n));
         long endTime = System.currentTimeMillis();
         System.out.println("董" + (endTime - startTime) + "ms");
+
+        System.out.println(lengthOfLongestSubstring("abc"));
 
     }
 

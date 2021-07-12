@@ -1,7 +1,4 @@
-package javase.objectClass;/*
- * @Author 高凌峰
- * @Date 2020-11-01 21:59
- */
+package javase.objectClass;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -32,6 +29,7 @@ import java.util.Set;
  *      假设A、B equals()不相等，hashCode()相等，A和B存入HashMap时会发生哈希冲突，A、B存放在
  *      HashMap内部数组的位置索引相同，这时HashMap会在该位置建立一个链表，将AB串起来存放在该位置，该情况不违反
  *      HashMap的使用原则，是允许的。
+ * @author gaolingfeng
  */
 public class HashCode {
     public static void main(String[] a){

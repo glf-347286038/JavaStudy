@@ -9,6 +9,15 @@ package javase.objectClass;/*
  * 对于 equals equals方法不能作用于基本数据类型的变量，equals继承Object类，比较的是是否是同一个对象
  * 如果没有对equals方法进行重写，则比较的是引用类型的变量所指向的对象的地址(默认比较的也是内存地址)
  * 如String、Data、Integer等类对equals方法进行了重写的话，比较的是所指向的对象的内容
+ *
+ *
+ * String s1 = new String("hello");在堆内存中创建了一个对象，在方法区中的字符串常量池中创建
+ * 了一个"hello"常量值，地址0x001指向new String();
+ * new String()本身就是new出来的，所以也有一个地址值0x0001,赋值给String s1,指向了String s1
+ * String s2 = "hello";直接赋值，在常量池里找，有就直接赋值，把"hello"的地址0x001给了String s2
+ * String s2指向了常量池里的"hello"
+ *
+ * @author gaolingfeng
  */
 public class Equals {
     public static void main(String[] args){
@@ -46,35 +55,16 @@ public class Equals {
     }
 
 
-    public class Person{
+    public static class Person{
         private String name;
-        public String getName(){
+
+        public String getName() {
             return name;
         }
-        public void setName(String name){
+
+        public void setName(String name) {
             this.name = name;
         }
-
-
-//        public boolean equals(Object o) {
-//            if (this == o) return true;
-//            if (!(o instanceof Person)) return false;
-//            Person person = (Person) o;
-//            return Objects.equals(getName(), person.getName());
-//        }
-
-//        public int hashCode() {
-//            return Objects.hash(getName());
-//        }
     }
 
-
-    /**
-     * String s1 = new String("hello");在堆内存中创建了一个对象，在方法区中的字符串常量池中创建
-     * 了一个"hello"常量值，地址0x001指向new String();
-     * new String()本身就是new出来的，所以也有一个地址值0x0001,赋值给String s1,指向了String s1
-     *
-     * String s2 = "hello";直接赋值，在常量池里找，有就直接赋值，把"hello"的地址0x001给了String s2
-     * String s2指向了常量池里的"hello"
-     */
 }

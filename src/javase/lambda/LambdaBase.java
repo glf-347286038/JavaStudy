@@ -1,7 +1,7 @@
-package javase.lambda;/*
- * @Author 高凌峰
- * @Date 2020-11-01 18:03
- */
+package javase.lambda;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,21 +26,13 @@ import java.util.stream.Collectors;
  * @author gaolingfeng
  */
 public class LambdaBase {
-    public static void main(String[] args){
-        //1.使用lambda表达式创建一个线程
-        Thread thread = new Thread(() -> {
-            for(int i=0;i<4;i++){
-                System.out.println(2+":"+i);
-            }
-        });
-        thread.start();
-
+    public static void main(String[] args) {
         //1.删除集合中的某个元素例如删除姓名为DD的元素
         ArrayList<Person> personList = new ArrayList<>();
-        personList.add(new Person("FF",1));
-        personList.add(new Person("GG",14));
-        personList.add(new Person("DD",18));
-        personList.add(new Person("CC",11));
+        personList.add(new Person("FF", 1));
+        personList.add(new Person("GG", 14));
+        personList.add(new Person("DD", 18));
+        personList.add(new Person("CC", 11));
 
         personList.removeIf(element -> "DD".equals(element.getName()));
         System.out.println(personList.size());
@@ -50,64 +42,33 @@ public class LambdaBase {
 
         //map():用于映射每个元素到对应的结果。以下代码片段使用 map 输出了元素对应的平方数：
         //Collectors(): 类实现了很多归约操作，例如将流转换成集合和聚合元素。Collectors 可用于返回列表或字符串：
-        personList.stream()
-                .map(myFunction -> {
-                    if("FF".equals(myFunction.getName())){
-                        myFunction.setName("lambda修改");
+        List<Person> personList1 = personList.stream()
+                .peek(person -> {
+                    if ("FF".equals(person.getName())) {
+                        person.setName("lambda修改");
                     }
-                    return myFunction;
                 }).collect(Collectors.toList());
         //输出
-        personList.forEach(System.out::println);
+        System.out.println(personList1);
 
         //3.修改所有列的数据
-        personList.stream().
-                map(element -> {
-                    element.setName("allUpdate");
-                    return element;
-                }).collect(Collectors.toList());
-        personList.forEach(System.out::println);
+        List<Person> personList2 = personList.stream().
+                peek(element -> element.setName("allUpdate")).collect(Collectors.toList());
+        System.out.println(personList2);
 
-        List<String> list= Arrays.asList("a", "b", "c", "d");
+        List<String> list = Arrays.asList("a", "b", "c", "d");
 
-        List<String> collect =list.stream().map(String::toUpperCase).collect(Collectors.toList());
+        List<String> collect = list.stream().map(String::toUpperCase).collect(Collectors.toList());
         System.out.println(collect);
         //[A, B, C, D]
 
     }
 
-    public static class Person{
+    @Data
+    @AllArgsConstructor
+    public static class Person {
         private String name;
         private Integer age;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Integer getAge() {
-            return age;
-        }
-
-        public void setAge(Integer age) {
-            this.age = age;
-        }
-
-        @Override
-        public String toString() {
-            return "Person{" +
-                    "name='" + name + '\'' +
-                    ", age=" + age +
-                    '}';
-        }
-
-        public Person(String name, Integer age) {
-            this.name = name;
-            this.age = age;
-        }
     }
 
 }

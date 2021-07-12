@@ -40,7 +40,7 @@ public class Thread001 {
  */
 class Processor implements Runnable{
 
-    Account account;
+    final Account account;
     Processor(Account account){
         this.account = account;
     }

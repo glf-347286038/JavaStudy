@@ -5,7 +5,7 @@ package designpatterns.strategymode.demo01;
  * @Date: 2021/7/5 21:53
  */
 public class Context {
-    private Strategy strategy;
+    private final Strategy strategy;
 
     public Context(Strategy strategy) {
         this.strategy = strategy;

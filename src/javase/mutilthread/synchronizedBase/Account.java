@@ -1,8 +1,11 @@
 package javase.mutilthread.synchronizedBase;
 
+import lombok.Data;
+
 /**
  * @author gaolingfeng
  */
+@Data
 public class Account {
     /**
      * 账号
@@ -13,26 +16,11 @@ public class Account {
      */
     private double balance;
 
-    public String getAccountNum() {
-        return accountNum;
-    }
-
-    public void setAccountNum(String accountNum) {
-        this.accountNum = accountNum;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
     /**
      * 构造方法
-     * @param accountNum
-     * @param balance
+     *
+     * @param accountNum 账户
+     * @param balance    余额
      */
     Account(String accountNum,double balance){
         this.accountNum = accountNum;
