@@ -14,10 +14,10 @@ public class Test {
         // 3.调用上下文对象的方法来完成具体策略的实现
         System.out.println(num1 + "+" + num2 + "=" + context.executeStrategy(num1, num2));
 
-        Context context1 = new Context(new OperationMultiply());
+        Context context1 = new Context(OperationFactory.getOperation("multiply"));
         System.out.println(num1 + "*" + num2 + "=" + context1.executeStrategy(num1, num2));
 
-        Context context2 = new Context(new OperationSubtract());
+        Context context2 = new Context(OperationFactory.getOperation("subtract"));
         System.out.println(num1 + "-" + num2 + "=" + context2.executeStrategy(num1, num2));
     }
 }
