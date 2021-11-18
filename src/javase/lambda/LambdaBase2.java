@@ -2,6 +2,7 @@ package javase.lambda;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -27,6 +28,8 @@ public class LambdaBase2 {
         bestValue();
 
         listToMap();
+
+        joining();
     }
 
     /**
@@ -117,6 +120,16 @@ public class LambdaBase2 {
         // Map<String,Person> personMap = personList.stream().collect(Collectors.toMap(Person::getName, account -> account)); key重复时会报错
         Map<String, Person> personMap = personList.stream().collect(Collectors.toMap(Person::getName, person -> person, (person1, person2) -> person1));
         System.out.println("mapToList" + personMap);
+    }
+
+    /**
+     * list中的某一列抽取出来合并
+     */
+    public static void joining() {
+        List<Person> personList = queryPerson();
+        // joining中可以为空,也可以加内容进行连接
+        String joinStr = personList.stream().map(Person::getName).collect(Collectors.joining(","));
+        System.out.println(joinStr);
     }
 
     public static List<Person> queryPerson() {
